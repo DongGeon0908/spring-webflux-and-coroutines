@@ -1,0 +1,58 @@
+# ===================================================================
+# Spring Boot Configuration for the default profile
+# ===================================================================
+
+# SERVER
+server:
+  port: 8080
+  http2:
+    enabled: true
+  shutdown: graceful # timeout configuration property : spring.lifecycle.timeout-per-shutdown-phase
+  error:
+    include-exception: true # Include the "exception" attribute.
+    include-stacktrace: always # When to include a "stacktrace" attribute.
+    whitelabel.enabled: true
+
+# LOGGING
+logging:
+  level:
+    root: INFO
+    com.goofy: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: DEBUG
+    org.springframework.r2dbc: DEBUG
+    reactor.netty.http.client: DEBUG
+
+# SPRING
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 5s # format : https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-conversion-duration
+  output:
+    ansi:
+      enabled: always
+  webflux:
+    multipart:
+      max-in-memory-size: 1024KB
+      max-file-size: 5MB
+      max-request-size: 10MB
+  jackson:
+    serialization:
+      indent_output: true
+      write-null-map-values: true
+  # R2DBC 설정
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/todo?useUnicode=true&charset=utf8mb4&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password:
+  # R2DBC 연결 풀 설정
+  r2dbc.pool:
+    enabled: true
+    initial-size: 5
+    max-size: 20
+    validation-query: SELECT 1
+
+# REACTOR NETTY
+reactor:
+  netty:
+    pool:
+      max-connections: 50
+      acquire-timeout: 30s
