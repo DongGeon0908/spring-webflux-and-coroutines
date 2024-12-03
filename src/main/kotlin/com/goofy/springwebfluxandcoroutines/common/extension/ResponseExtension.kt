@@ -1,15 +1,12 @@
 package com.goofy.springwebfluxandcoroutines.common.extension
 
-import com.goofy.springwebfluxandcoroutines.common.model.PageResponse
 import com.goofy.springwebfluxandcoroutines.common.model.Response
-import org.springframework.data.domain.Page
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import java.net.URI
 
-/** Wrap Response Page */
-fun <T> Page<T>.wrapPage() = ResponseEntity.ok(PageResponse(this))
+fun <T> T.wrap() = ResponseEntity.ok(this)
 
 /** Wrap Response Ok */
 fun <T> T.wrapOk() = ResponseEntity.ok(Response(this))
